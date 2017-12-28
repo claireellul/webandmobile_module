@@ -1,23 +1,102 @@
-// code adapted from:  http://www.theprojectspot.com/tutorial-post/Node-js-for-beginners-part-1-hello-world/2  (28th December 2017)
+// *********************************
+// DO NOT CHANGE THIS CODE
+
+// express is the server that forms part of the nodejs program
+var express = require('express');
+var app = express();
 
 
-// this is a web server so we require the http component of nodejs to set up the server 
-// require is the javascript equivalent of pythons import or importlib
-var http = require('http');
+// start the server - we listen on local port 8080
+var server = app.listen(8080);
+// *********************************
 
-// create the server
-// as we will see later on (Week 5), the request object is what you send TO  the server, the response is what comes back to your browser
-http.createServer(function (request, response) {
+// ************************************************
+// CHANGE THIS CODE EACH TIME 
+//this is the code that decides what happens when you type in a URL in the browser
 
-    // send out the HTML header as part of the response
-    response.writeHead(200, {'Content-Type': 'text/plain'});
+// the / indicates the path that you type into the server - in this case, what happens when you type in:  http://developer.cege.ucl.ac.uk:32560/
+app.get('/', function (req, res) {
+  // run some server-side code
+  // the console is the command line of your server - you will see the console.log values in the terminal window
+  console.log('basic hello world');
 
-    // now write the text that we want to display on screen
-    response.end('Hello World\n');
-
-  // 8080 is the port that we want the server to listen on - this means that when we type in the URL of the server it will listen out for the request and process it  
-}).listen(8080);
+  // the res is the response that the server sends back to the browser - you will see this text in your browser window
+  res.send('Hello Wor3ld!');
+});
 
 
-// send a message out to the console
-console.log('Server started');
+// the / indicates the path that you type into the server - in this case, what happens when you type in:  http://developer.cege.ucl.ac.uk:32560/dosomething
+app.get('/dosomething', function (req, res) {
+  // run some server-side code
+  // the console is the command line of your server - you will see the console.log values in the terminal window
+  console.log('do something else');
+
+  // the res is the response that the server sends back to the browser - you will see this text in your browser window
+  res.send('Do something else!');
+});
+
+
+// the / indicates the path that you type into the server - in this case, what happens when you type in:  http://developer.cege.ucl.ac.uk:32560/
+app.get('/:name', function (req, res) {
+  // run some server-side code
+  // the console is the command line of your server - you will see the console.log values in the terminal window
+  console.log('basic hello world');
+
+  // the res is the response that the server sends back to the browser - you will see this text in your browser window
+  res.send('Hello Wor3ld!' + req.params.name);
+});
+
+
+app.get('/:name1/:name2', function (req, res) {
+  // run some server-side code
+  // the console is the command line of your server - you will see the console.log values in the terminal window
+  console.log('basic hello world');
+
+  // the res is the response that the server sends back to the browser - you will see this text in your browser window
+  res.send('Hello Wor3ld!' + req.params.name2 + "/" + req.params.name2);
+});
+
+
+
+app.get('/:name1/:name2/:name3', function (req, res) {
+  // run some server-side code
+  // the console is the command line of your server - you will see the console.log values in the terminal window
+  console.log('basic hello world');
+
+  // the res is the response that the server sends back to the browser - you will see this text in your browser window
+  res.send('Hello Wor3ld!' + req.params.name2 + "/" + req.params.name2+ "/"+ req.params.name3);
+});
+
+
+
+// *********************************
+// DO NOT CHANGE THIS CODE
+
+// this code is required to shut down the server - e.g. when you want to make a change to the code
+// and can't simply stop the server at command line using ctrl-c 
+// in the browser type:  http://developer.cege.ucl.ac.uk:32560/shutdown32560   (NB: change the port to your own port as otherwise you might have other people shutting your server down by mistake)
+app.get('/shutdown32560', function (req, res) {  // change the port here too!
+  // run some server-side code
+  console.log('shutdown received');
+  gracefulShutdown();
+});
+
+
+// this function is called when you want the server to die gracefully
+// i.e. wait for existing connections
+function gracefulShutdown()  {
+  console.log("Received kill signal, shutting down gracefully.");
+  server.close(function() {
+    console.log("Closed out remaining connections.");
+    process.exit()
+  });
+  
+   // if after 
+   setTimeout(function() {
+       console.error("Could not close connections in time, forcefully shutting down");
+       process.exit()
+  }, 10*1000);
+}
+
+// *********************************
+
