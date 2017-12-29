@@ -1,9 +1,11 @@
 <html>
 <head>
-	<title>Test HTML Location Functionality</title>
+<title>Test HTML Location Functionality</title>
+<script>
+document.getElementById(‘showLocation’) = "Latitude: " + position.coords.latitude +     "<br>Longitude: " + position.coords.longitude; 
+</script>
 </head>
 <body>
 <b>This code will display your current location</b>
 <div id='showLocation'>Location will be displayed here</div>
 </body>
-</html>
